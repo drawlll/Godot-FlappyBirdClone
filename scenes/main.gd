@@ -9,8 +9,8 @@ extends Node
 
 var game_running :bool
 var game_over :bool
-var scroll
-var score
+var scroll = 0
+var score = 0
 const SCROLL_SPEED :int = 4
 var screen_size :Vector2
 var ground_height :int
@@ -19,8 +19,6 @@ const PIPE_DELAY :int = 100
 const PIPE_RANGE :int = 200
 
 func _ready():
-	ui.get_parent().get_node("StartButton").visible = false
-	ui.get_child(0).get_node("ScoreCounter").visible = true
 	screen_size = get_window().size
 	ground_height = ground.get_node("Sprite2D").texture.get_height()
 	ui.restart.connect(new_game)
@@ -33,23 +31,23 @@ func _ready():
 		"blue":
 			bird.get_node("AnimatedSprite2D").play("blue_flying")
 		_:
-			var rand = randi() % 30
-			if rand < 10:
-				bird.get_node("AnimatedSprite2D").play("yellow_flying")
-			elif rand >= 10:
-				bird.get_node("AnimatedSprite2D").play("red_flying")
-			else:
-				bird.get_node("AnimatedSprite2D").play("blue_flying")
+			bird.get_node("AnimatedSprite2D").play("yellow_flying")
 	new_game()
+	ui.get_parent().get_node("StartButton").visible = false
+	ui.get_child(0).get_node("ScoreCounter").visible = true
 	$CanvasLayer/AnimationPlayer.play("black2wipe")
 	await get_tree().create_timer(0.3).timeout
 	$Audio.play_sound("swoosh")
 
 func new_game():
+	$CanvasLayer/AnimationPlayer.play("fade2white")
+	await get_tree().create_timer(0.8).timeout
+	$BackgroundNight.position.x = screen_size.x
+	score = 0
+	get_node("CanvasLayer/UI").find_child("UI").update_score(score)
+	scroll = 0
 	game_running = false
 	game_over = false
-	score = 0
-	scroll = 0
 	pipes.clear()
 	get_tree().call_group("pipes", "queue_free")
 	generate_pipes()
@@ -112,7 +110,8 @@ func _physics_process(delta):
 		scroll += SCROLL_SPEED
 		if scroll >= screen_size.x:
 			scroll = 0
-		%Ground.position.x = -scroll
+		%Ground.position.x = (-scroll)
+		$BackgroundNight.position.x = (-scroll / 2 + screen_size.x)
 		for pipe in pipes:
 			if is_instance_valid(pipe):
 				pipe.position.x -= SCROLL_SPEED

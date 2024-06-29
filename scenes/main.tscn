@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dnmeq1ogkuw54"]
+[gd_scene load_steps=25 format=3 uid="uid://dnmeq1ogkuw54"]
 
 [ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://Assets/tut_assets/assets/bg.png" id="1_i4mjq"]
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_ryn4w"]
@@ -139,10 +139,39 @@ tracks/1/keys = {
 "values": [0.0, 1.0]
 }
 
+[sub_resource type="Animation" id="Animation_oqf6r"]
+resource_name = "fade2white"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WhiteScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(0.435275, 0.307787, 0.435275),
+"update": 0,
+"values": [Color(100, 100, 100, 0), Color(100, 100, 100, 1), Color(100, 100, 100, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WhiteScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.2, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_plxuh"]
 _data = {
 "RESET": SubResource("Animation_rsmod"),
 "black2wipe": SubResource("Animation_qeek3"),
+"fade2white": SubResource("Animation_oqf6r"),
 "whitescreen": SubResource("Animation_f1ils"),
 "wipe2black": SubResource("Animation_p7ton")
 }
@@ -179,11 +208,11 @@ texture = ExtResource("1_i4mjq")
 [node name="BackgroundNight" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 2
-position = Vector2(432, 384)
+position = Vector2(864, 384)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("10_iq4q2")
 region_enabled = true
-region_rect = Rect2(0, 0, 576, 512)
+region_rect = Rect2(0, 0, 1152, 512)
 
 [node name="Ground" parent="." instance=ExtResource("3_sxlt1")]
 unique_name_in_owner = true

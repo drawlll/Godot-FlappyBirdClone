@@ -23,7 +23,8 @@ Global="*res://scripts/global.gd"
 
 window/size/viewport_width=864
 window/size/viewport_height=936
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
+window/handheld/orientation=1
 
 [rendering]
 
