@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://c34p6usahf5yf"]
+
+[ext_resource type="Script" path="res://scenes/score_counter.gd" id="1_7su3i"]
+[ext_resource type="Texture2D" uid="uid://cnqfn3kte46jf" path="res://Assets/FlappyBird/Assets/Sprites/UI/numbers.png" id="2_p2lgw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g88q1"]
+atlas = ExtResource("2_p2lgw")
+region = Rect2(0, 0, 24, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y32xv"]
+atlas = ExtResource("2_p2lgw")
+region = Rect2(0, 0, 24, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdypa"]
+atlas = ExtResource("2_p2lgw")
+region = Rect2(0, 0, 24, 36)
+
+[node name="ScoreCounter" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+alignment = 2
+script = ExtResource("1_7su3i")
+
+[node name="Digit0" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_g88q1")
+stretch_mode = 5
+
+[node name="Digit1" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_y32xv")
+stretch_mode = 5
+
+[node name="Digit2" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_wdypa")
+stretch_mode = 5

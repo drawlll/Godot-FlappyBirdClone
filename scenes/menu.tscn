@@ -1,0 +1,361 @@
+[gd_scene load_steps=28 format=3 uid="uid://cn2dctl3uptqi"]
+
+[ext_resource type="Script" path="res://scripts/AudioManager.gd" id="1_dmd1i"]
+[ext_resource type="Script" path="res://scenes/menu.gd" id="1_gjdqd"]
+[ext_resource type="AudioStream" uid="uid://cumsmuos07fua" path="res://Assets/FlappyBird/Assets/Audio/die.ogg" id="2_ffcfg"]
+[ext_resource type="AudioStream" uid="uid://bargah7u6ulc6" path="res://Assets/FlappyBird/Assets/Audio/hit.ogg" id="3_oj1bj"]
+[ext_resource type="AudioStream" uid="uid://cwooaobom52yu" path="res://Assets/FlappyBird/Assets/Audio/point.ogg" id="4_3kdfk"]
+[ext_resource type="AudioStream" uid="uid://cc3iyejbaqot1" path="res://Assets/FlappyBird/Assets/Audio/swoosh.ogg" id="5_epapt"]
+[ext_resource type="AudioStream" uid="uid://d2bi6h5srois8" path="res://Assets/FlappyBird/Assets/Audio/wing.ogg" id="6_flp7n"]
+[ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://Assets/tut_assets/assets/bg.png" id="7_hw3hu"]
+[ext_resource type="Texture2D" uid="uid://gtxe5xr4t7g8" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/background-night.png" id="8_ldyto"]
+[ext_resource type="PackedScene" uid="uid://cmc01r6y0mi26" path="res://scenes/ground.tscn" id="9_rgi6c"]
+[ext_resource type="PackedScene" uid="uid://fncxao2qk1et" path="res://scenes/bird.tscn" id="10_p7cu8"]
+[ext_resource type="PackedScene" uid="uid://rog38ly0tqjs" path="res://scenes/ui.tscn" id="12_4hink"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="13_iyx3o"]
+[ext_resource type="Shader" path="res://shaders/wipe.gdshader" id="13_obj2v"]
+[ext_resource type="Texture2D" uid="uid://dw4feu7w0hyhl" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/yellowbird-midflap.png" id="13_rlrdw"]
+[ext_resource type="Texture2D" uid="uid://b36val34ada7p" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/redbird-upflap.png" id="14_gknf1"]
+[ext_resource type="Texture2D" uid="uid://dhsqwhscfvjxx" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/bluebird-midflap.png" id="15_s4y5q"]
+[ext_resource type="Texture2D" uid="uid://clesffjr3r76s" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/redbird-midflap.png" id="16_m6enu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knrb7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_rlrdw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_m6enu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_s4y5q")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_asqrn"]
+resource_name = "birdbop"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ChosenBird:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1.5, 1.5, 1.5),
+"update": 0,
+"values": [Vector2(20, -200), Vector2(20, -220), Vector2(20, -200)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2wxa"]
+_data = {
+"birdbop": SubResource("Animation_asqrn")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ekcg4"]
+shader = ExtResource("13_obj2v")
+shader_parameter/percentage = 0.0
+shader_parameter/hidden_alpha = 0.0
+shader_parameter/flip = false
+shader_parameter/horizontal = true
+shader_parameter/frames = 1
+
+[sub_resource type="Animation" id="Animation_rsmod"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WhiteScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(100, 100, 100, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WhiteScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_qeek3"]
+resource_name = "black2wipe"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackScreen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackScreen:material:shader_parameter/percentage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(7.72749, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_f1ils"]
+resource_name = "whitescreen"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WhiteScreen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(0.34151, 0.307787, 0.34151),
+"update": 0,
+"values": [Color(100, 100, 100, 0), Color(100, 100, 100, 0.603922), Color(100, 100, 100, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WhiteScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_p7ton"]
+resource_name = "fade2white"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackScreen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackScreen:material:shader_parameter/percentage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(7.72749, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_plxuh"]
+_data = {
+"RESET": SubResource("Animation_rsmod"),
+"black2wipe": SubResource("Animation_qeek3"),
+"whitescreen": SubResource("Animation_f1ils"),
+"wipe2black": SubResource("Animation_p7ton")
+}
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_gjdqd")
+
+[node name="Audio" type="Node" parent="."]
+script = ExtResource("1_dmd1i")
+
+[node name="die" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("2_ffcfg")
+
+[node name="hit" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("3_oj1bj")
+
+[node name="point" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("4_3kdfk")
+volume_db = -6.882
+
+[node name="swoosh" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("5_epapt")
+
+[node name="wing" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("6_flp7n")
+
+[node name="BackgroundDay" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(432, 384)
+texture = ExtResource("7_hw3hu")
+
+[node name="BackgroundNight" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(432, 384)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("8_ldyto")
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 512)
+
+[node name="Ground" parent="." instance=ExtResource("9_rgi6c")]
+unique_name_in_owner = true
+z_index = 1
+texture_filter = 1
+
+[node name="Bird" parent="." instance=ExtResource("10_p7cu8")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(96, 424)
+
+[node name="PipesTimer" type="Timer" parent="."]
+wait_time = 1.2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("12_4hink")]
+unique_name_in_owner = true
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -66.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="YellowBird" type="Button" parent="CanvasLayer/HBoxContainer/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+icon = ExtResource("13_rlrdw")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="RedBird" type="Button" parent="CanvasLayer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+icon = ExtResource("14_gknf1")
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="BlueBird" type="Button" parent="CanvasLayer/HBoxContainer/MarginContainer3"]
+layout_mode = 2
+icon = ExtResource("15_s4y5q")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ChosenBird" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+position = Vector2(20, -200)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_knrb7")
+
+[node name="BirdBop" type="AnimationPlayer" parent="CanvasLayer/Control"]
+autoplay = "birdbop"
+libraries = {
+"": SubResource("AnimationLibrary_p2wxa")
+}
+
+[node name="WhiteScreen" type="ColorRect" parent="CanvasLayer"]
+visible = false
+modulate = Color(100, 100, 100, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1836.0
+offset_bottom = 4329.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.32, 0.177779)
+metadata/_edit_use_anchors_ = true
+
+[node name="BlackScreen" type="ColorRect" parent="CanvasLayer"]
+visible = false
+modulate = Color(0.733333, 0.901961, 0.956863, 1)
+material = SubResource("ShaderMaterial_ekcg4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1836.0
+offset_bottom = 4329.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.32, 0.177779)
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_plxuh")
+}
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("camera")]
+anchor_mode = 0
+script = ExtResource("13_iyx3o")
+camera = NodePath("../ShakeCamera")
+max_offset = Vector2(2, 2)
+decay = 2.0
+
+[node name="ShakeCamera" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/MarginContainer/YellowBird" to="." method="_on_yellow_bird_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/MarginContainer2/RedBird" to="." method="_on_red_bird_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/MarginContainer3/BlueBird" to="." method="_on_blue_bird_pressed"]

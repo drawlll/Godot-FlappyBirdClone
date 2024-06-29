@@ -1,0 +1,73 @@
+[gd_scene load_steps=13 format=3 uid="uid://fncxao2qk1et"]
+
+[ext_resource type="Texture2D" uid="uid://bclq7ls451n7h" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/redbird-downflap.png" id="1_1cabp"]
+[ext_resource type="Script" path="res://scenes/bird.gd" id="1_ckvie"]
+[ext_resource type="Texture2D" uid="uid://fsdnr7m3nsur" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/bluebird-downflap.png" id="2_6xi80"]
+[ext_resource type="Texture2D" uid="uid://clesffjr3r76s" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/redbird-midflap.png" id="2_pubg4"]
+[ext_resource type="Texture2D" uid="uid://b36val34ada7p" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/redbird-upflap.png" id="3_6rcpd"]
+[ext_resource type="Texture2D" uid="uid://dhsqwhscfvjxx" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/bluebird-midflap.png" id="3_ysryb"]
+[ext_resource type="Texture2D" uid="uid://osxl15uh8j3s" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/bluebird-upflap.png" id="4_wibbj"]
+[ext_resource type="Texture2D" uid="uid://cajw08snm3yp0" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/yellowbird-downflap.png" id="8_toym6"]
+[ext_resource type="Texture2D" uid="uid://dw4feu7w0hyhl" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/yellowbird-midflap.png" id="9_gqvhd"]
+[ext_resource type="Texture2D" uid="uid://b2ayfwjar8i47" path="res://Assets/FlappyBird/Assets/Sprites/Gameplay/yellowbird-upflap.png" id="10_uktj1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hlxvw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6xi80")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ysryb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wibbj")
+}],
+"loop": true,
+"name": &"blue_flying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1cabp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pubg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6rcpd")
+}],
+"loop": true,
+"name": &"red_flying",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_toym6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gqvhd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_uktj1")
+}],
+"loop": true,
+"name": &"yellow_flying",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gtwyw"]
+radius = 12.0
+height = 38.0
+
+[node name="Bird" type="CharacterBody2D"]
+script = ExtResource("1_ckvie")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 3
+sprite_frames = SubResource("SpriteFrames_hlxvw")
+animation = &"blue_flying"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gtwyw")
