@@ -24,6 +24,7 @@ func _ready():
 	screen_size = get_window().size
 	ground_height = ground.get_node("Sprite2D").texture.get_height()
 	ui.restart.connect(new_game)
+	ground.hit.connect(bird_hit)
 	match Global.bird_pressed:
 		"yellow":
 			bird.get_node("AnimatedSprite2D").play("yellow_flying")
